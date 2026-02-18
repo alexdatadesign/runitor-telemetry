@@ -88,8 +88,8 @@ func parseField(s string, min, max int, dest []bool) (bool, error) {
 		step := 1
 		rangeStr := part
 
-		if i := strings.Index(part, "/"); i >= 0 {
-			stepStr := part[i+1:]
+		if before, after, ok := strings.Cut(part, "/"); ok {
+			stepStr := after
 			var err error
 			step, err = strconv.Atoi(stepStr)
 			if err != nil {
@@ -98,7 +98,7 @@ func parseField(s string, min, max int, dest []bool) (bool, error) {
 			if step <= 0 {
 				return false, ErrCronPositiveStep
 			}
-			rangeStr = part[:i]
+			rangeStr = before
 		}
 
 		var start, end int
@@ -106,9 +106,9 @@ func parseField(s string, min, max int, dest []bool) (bool, error) {
 
 		if rangeStr == "*" {
 			start, end = min, max
-		} else if i := strings.Index(rangeStr, "-"); i >= 0 {
-			startStr := rangeStr[:i]
-			endStr := rangeStr[i+1:]
+		} else if before, after, ok := strings.Cut(rangeStr, "-"); ok {
+			startStr := before
+			endStr := after
 			start, err = strconv.Atoi(startStr)
 			if err != nil {
 				return false, fmt.Errorf("%w %q: %w", ErrCronRangeStart, startStr, err)

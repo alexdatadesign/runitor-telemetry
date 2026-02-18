@@ -85,10 +85,7 @@ func (r *RingBuffer) Write(p []byte) (n int, err error) {
 func (r *RingBuffer) write(p []byte) (n int) {
 	// grow slice by write size, up to capacity.
 	if r.Len() != r.Cap() {
-		newlen := r.idx + len(p)
-		if newlen > r.Cap() {
-			newlen = r.Cap()
-		}
+		newlen := min(r.idx+len(p), r.Cap())
 
 		r.buf = r.buf[:newlen]
 	}
@@ -126,17 +123,11 @@ func (r *RingBuffer) Read(p []byte) (n int, err error) {
 }
 
 func (r *RingBuffer) read(p []byte) (n int) {
-	goal := len(p)
-	if goal > r.unread {
-		goal = r.unread
-	}
+	goal := min(len(p), r.unread)
 
 	for n < goal {
 		from := r.idx
-		to := from + r.unread
-		if to > r.Len() {
-			to = r.Len()
-		}
+		to := min(from+r.unread, r.Len())
 		cn := copy(p[n:], r.buf[from:to])
 		n += cn
 		r.unread -= cn

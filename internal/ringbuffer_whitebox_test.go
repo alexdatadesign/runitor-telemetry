@@ -38,10 +38,7 @@ func TestWriteWhitebox(t *testing.T) {
 			t.Errorf("%s: expected Write to return %d, got %d", tc.name, len(tc.str), n)
 		}
 
-		lenExp = (lenExp + n)
-		if lenExp > rb.Cap() {
-			lenExp = rb.Cap()
-		}
+		lenExp = min((lenExp + n), rb.Cap())
 
 		if rblen := rb.Len(); rblen != lenExp {
 			t.Errorf("%s: expected Len to return %d, got %d", tc.name, lenExp, rblen)

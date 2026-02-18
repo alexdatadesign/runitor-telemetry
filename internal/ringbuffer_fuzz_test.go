@@ -47,10 +47,7 @@ func FuzzRingBuffer(f *testing.F) {
 
 		// Write payload in chunks to verify partial writes and wrapping
 		for i := 0; i < len(payload); i += chunkSize {
-			end := i + chunkSize
-			if end > len(payload) {
-				end = len(payload)
-			}
+			end := min(i+chunkSize, len(payload))
 			chunk := payload[i:end]
 
 			n, err := rb.Write(chunk)

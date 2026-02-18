@@ -83,8 +83,8 @@ func parseField(s string, min, max int, dest []bool) (bool, error) {
 		return true, nil
 	}
 
-	parts := strings.Split(s, ",")
-	for _, part := range parts {
+	parts := strings.SplitSeq(s, ",")
+	for part := range parts {
 		step := 1
 		rangeStr := part
 

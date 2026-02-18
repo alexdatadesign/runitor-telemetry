@@ -12,8 +12,8 @@ import (
 
 func FuzzRingBuffer(f *testing.F) {
 	// Seed corpus
-	f.Add([]byte{10, 5, 'h', 'e', 'l', 'l', 'o'}) // cap 10, chunk 5, "hello"
-	f.Add([]byte{5, 2, 'w', 'o', 'r', 'l', 'd'})  // cap 5, chunk 2, "world"
+	f.Add([]byte{10, 5, 'h', 'e', 'l', 'l', 'o'})     // cap 10, chunk 5, "hello"
+	f.Add([]byte{5, 2, 'w', 'o', 'r', 'l', 'd'})      // cap 5, chunk 2, "world"
 	f.Add([]byte{4, 1, '1', '2', '3', '4', '5', '6'}) // cap 4, chunk 1, wrap behavior
 
 	f.Fuzz(func(t *testing.T, data []byte) {

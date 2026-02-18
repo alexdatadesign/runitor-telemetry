@@ -11,14 +11,14 @@ import (
 )
 
 var (
-	ErrCronFieldCount = errors.New("expected 5 fields")
-	ErrCronInvalidStep = errors.New("invalid step")
+	ErrCronFieldCount   = errors.New("expected 5 fields")
+	ErrCronInvalidStep  = errors.New("invalid step")
 	ErrCronPositiveStep = errors.New("step must be positive")
-	ErrCronRangeStart = errors.New("invalid range start")
-	ErrCronRangeEnd = errors.New("invalid range end")
+	ErrCronRangeStart   = errors.New("invalid range start")
+	ErrCronRangeEnd     = errors.New("invalid range end")
 	ErrCronInvalidValue = errors.New("invalid value")
-	ErrCronOutOfRange = errors.New("value out of range")
-	ErrCronRangeOrder = errors.New("range start > end")
+	ErrCronOutOfRange   = errors.New("value out of range")
+	ErrCronRangeOrder   = errors.New("range start > end")
 )
 
 // Cron represents a parsed cron schedule.
@@ -206,4 +206,3 @@ func (c *Cron) Next(t time.Time) time.Time {
 	}
 	return time.Time{} // Should not happen
 }
-

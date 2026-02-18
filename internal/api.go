@@ -15,6 +15,7 @@ import (
 	"net/http"
 	"net/url"
 	urlpkg "net/url"
+	"slices"
 	"strconv"
 	"time"
 )
@@ -61,13 +62,7 @@ func NewDefaultTransportWithResumption() *http.Transport {
 }
 
 func retriableResponse(code int) bool {
-	for _, i := range RetriableResponseCodes {
-		if code == i {
-			return true
-		}
-	}
-
-	return false
+	return slices.Contains(RetriableResponseCodes, code)
 }
 
 // Pinger is the interface to Healthchecks.io pinging API
